@@ -1,0 +1,20 @@
+.container {
+    height: 85vh;
+    margin-top: 1.5rem;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.tasksTitle {
+    color: white;
+    padding: 1.5rem 0 0 1.5rem;
+}
+
+.tasksContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 1rem;
+    height: 85vh;
+    border-radius: 1rem 1rem 0 0;
+    overflow-y: scroll;
+}
