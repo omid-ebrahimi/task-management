@@ -4,6 +4,7 @@ import { TaskModel } from './App.types'
 interface TasksContextModel {
   tasks: TaskModel[]
   addTask: (task: TaskModel) => void
+  editTask: (task: TaskModel) => void
 }
 
 const doNoThing = () => {
@@ -12,7 +13,8 @@ const doNoThing = () => {
 
 export const TasksContext = createContext<TasksContextModel>({
   tasks: [],
-  addTask: doNoThing
+  addTask: doNoThing,
+  editTask: doNoThing
 })
 
 export function useTasksContextInitializer(): TasksContextModel {
@@ -20,7 +22,10 @@ export function useTasksContextInitializer(): TasksContextModel {
 
   const addTask = (task: TaskModel) => setTasks(tasks => [...tasks, task])
 
-  return { tasks, addTask }
+  const editTask = (task: TaskModel) =>
+    setTasks(tasks => tasks.map(t => (t.id === task.id ? task : t)))
+
+  return { tasks, addTask, editTask }
 }
 
 export function useTasksContext(): TasksContextModel {

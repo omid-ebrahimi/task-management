@@ -1,0 +1,15 @@
+.container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 4rem;
+}
+
+.subtitle {
+    font-size: 2rem;
+}
