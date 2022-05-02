@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid'
 import React, { useState } from 'react'
 import { Add } from '@mui/icons-material'
 import { Button, TextField } from '@mui/material'
@@ -15,7 +14,9 @@ function AddTask() {
     if (!title || !description) {
       return alert('Please enter a title and description')
     }
-    addTask({ title, description, state: 'ToDo', id: uuid() })
+    addTask({ title, description, state: 'ToDo' })
+    setTitle('')
+    setDescription('')
   }
 
   return (

@@ -1,10 +1,11 @@
+import { v4 as uuid } from 'uuid'
 import { createContext, useContext, useState } from 'react'
 import { TaskModel, TaskState } from './App.types'
 
 interface TasksContextModel {
   tasks: TaskModel[]
-  addTask: (task: TaskModel) => void
-  editTask: (task: TaskModel) => void
+  addTask: (task: Omit<TaskModel, 'id' | 'history'>) => void
+  editTask: (task: Partial<TaskModel> & Pick<TaskModel, 'id'>) => void
 }
 
 export const nextTaskStates: Record<TaskState, TaskState[]> = {
@@ -29,10 +30,15 @@ export const TasksContext = createContext<TasksContextModel>({
 export function useTasksContextInitializer(): TasksContextModel {
   const [tasks, setTasks] = useState<TaskModel[]>([])
 
-  const addTask = (task: TaskModel) => setTasks(tasks => [...tasks, task])
+  const addTask: TasksContextModel['addTask'] = task => {
+    setTasks(tasks => [...tasks, { ...task, id: uuid(), history: [] }])
+  }
 
-  const editTask = (task: TaskModel) =>
-    setTasks(tasks => tasks.map(t => (t.id === task.id ? task : t)))
+  const editTask: TasksContextModel['editTask'] = task => {
+    setTasks(tasks =>
+      tasks.map(t => (t.id === task.id ? { ...t, ...task } : t))
+    )
+  }
 
   return { tasks, addTask, editTask }
 }

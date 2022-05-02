@@ -15,7 +15,7 @@ function EditTask() {
 
   const { tasks, editTask } = useTasksContext()
 
-  const task = taskId && tasks.find(({ id }) => taskId === id)
+  const task = taskId ? tasks.find(({ id }) => taskId === id) : undefined
   if (!task) return <NotFound />
 
   const [title, setTitle] = useState(task.title)
@@ -23,8 +23,11 @@ function EditTask() {
   const [state, setState] = useState(task.state)
 
   function onEditClicked() {
-    editTask({ title, description, state, id: taskId as string })
-    navigate(-1)
+    if (task) {
+      const history =
+        state !== task.state ? [task.state, ...task.history] : task.history
+      editTask({ title, description, state, history, id: taskId as string })
+    }
   }
 
   return (
@@ -84,6 +87,13 @@ function EditTask() {
           Cancel
         </Button>
       </div>
+      <h1>History</h1>
+      {task.history.length > 0 &&
+        task.history.map((item, index) => (
+          <p key={index}>
+            {item} {'->'} {task.history[index - 1] ?? task.state}
+          </p>
+        ))}
     </div>
   )
 }
