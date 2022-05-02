@@ -14,9 +14,14 @@ function Tasks() {
         className={styles.tasksContainer}
         sx={{ backgroundColor: 'secondary.main' }}
       >
-        {tasks.map(task => (
-          <Task key={task.id} task={task} />
-        ))}
+        {tasks.length ? (
+          tasks.map(task => <Task key={task.id} task={task} />)
+        ) : (
+          <div className={styles.emptyList}>
+            <h1>You have nothing to do.</h1>
+            <h1>Go get some sleep.</h1>
+          </div>
+        )}
       </Box>
     </Box>
   )
