@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ThemeProvider } from '@mui/material'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import StyledEngineProvider from '@mui/material/StyledEngineProvider'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import './index.css'
 import App from './app/App'
 import theme from './theme'
-import { Home, NotFound } from './app/pages'
 import reportWebVitals from './reportWebVitals'
+import { EditTask, Home, NotFound } from './app/pages'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -17,7 +17,9 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App />}>
-              <Route index element={<Home />} />
+              <Route path="home" element={<Home />} />
+              <Route path="edit/:taskId" element={<EditTask />} />
+              <Route index element={<Navigate to="/home" />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

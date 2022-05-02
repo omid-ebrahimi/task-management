@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem;
+}
+
+.input {
+    margin-bottom: 1rem;
+}
+
+.editIcon {
+    filter: invert(1);
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.button {
+    flex: 1;
+}
+
+.button:nth-child(2) {
+    margin-left: 1rem;
+}
