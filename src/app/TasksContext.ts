@@ -1,10 +1,19 @@
 import { createContext, useContext, useState } from 'react'
-import { TaskModel } from './App.types'
+import { TaskModel, TaskState } from './App.types'
 
 interface TasksContextModel {
   tasks: TaskModel[]
   addTask: (task: TaskModel) => void
   editTask: (task: TaskModel) => void
+}
+
+export const nextTaskStates: Record<TaskState, TaskState[]> = {
+  ToDo: ['InProgress'],
+  InProgress: ['Blocked', 'InQA'],
+  Blocked: ['ToDo'],
+  InQA: ['ToDo', 'Done'],
+  Done: ['Deployed'],
+  Deployed: []
 }
 
 const doNoThing = () => {

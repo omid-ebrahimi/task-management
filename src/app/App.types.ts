@@ -1,11 +1,10 @@
-export enum TaskState {
-  ToDo = 'ToDo',
-  InProgress = 'InProgress',
-  Blocked = 'Blocked',
-  InQA = 'InQA',
-  Done = 'Done',
-  Deployed = 'Deployed'
-}
+export type TaskState =
+  | 'ToDo'
+  | 'InProgress'
+  | 'Blocked'
+  | 'InQA'
+  | 'Done'
+  | 'Deployed'
 
 export interface TaskModel {
   id: string

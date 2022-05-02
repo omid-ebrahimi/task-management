@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Params, useNavigate, useParams } from 'react-router-dom'
-import { Button, TextField } from '@mui/material'
+import { Button, MenuItem, Select, TextField } from '@mui/material'
 import EditIcon from 'src/images/edit.svg'
-import { useTasksContext } from 'src/app/TasksContext'
+import { TaskState } from 'src/app/App.types'
+import { nextTaskStates, useTasksContext } from 'src/app/TasksContext'
 import { NotFound } from '../index'
 import styles from './EditTask.module.css'
-import { TaskState } from '../../App.types'
 
 type RouteParams = Params<'taskId'>
 
@@ -15,19 +15,15 @@ function EditTask() {
 
   const { tasks, editTask } = useTasksContext()
 
-  const task = taskId ? tasks.find(({ id }) => taskId === id) : undefined
+  const task = taskId && tasks.find(({ id }) => taskId === id)
   if (!task) return <NotFound />
 
   const [title, setTitle] = useState(task.title)
   const [description, setDescription] = useState(task.description)
+  const [state, setState] = useState(task.state)
 
   function onEditClicked() {
-    editTask({
-      title,
-      description,
-      state: task?.state as TaskState,
-      id: taskId as string
-    })
+    editTask({ title, description, state, id: taskId as string })
     navigate(-1)
   }
 
@@ -52,6 +48,17 @@ function EditTask() {
         minRows={3}
         variant="filled"
       />
+      <Select
+        value={state}
+        onChange={({ target }) => setState(target.value as TaskState)}
+        variant="filled"
+      >
+        {[task.state, ...nextTaskStates[task.state]].map(taskState => (
+          <MenuItem key={taskState} value={taskState}>
+            {taskState}
+          </MenuItem>
+        ))}
+      </Select>
       <div className={styles.footer}>
         <Button
           onClick={onEditClicked}

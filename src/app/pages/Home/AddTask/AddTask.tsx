@@ -2,7 +2,6 @@ import { v4 as uuid } from 'uuid'
 import React, { useState } from 'react'
 import { Add } from '@mui/icons-material'
 import { Button, TextField } from '@mui/material'
-import { TaskState } from 'src/app/App.types'
 import { useTasksContext } from 'src/app/TasksContext'
 import styles from './AddTask.module.css'
 
@@ -16,7 +15,7 @@ function AddTask() {
     if (!title || !description) {
       return alert('Please enter a title and description')
     }
-    addTask({ title, description, state: TaskState.ToDo, id: uuid() })
+    addTask({ title, description, state: 'ToDo', id: uuid() })
   }
 
   return (
